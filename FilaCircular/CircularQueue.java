@@ -3,8 +3,11 @@ public class CircularQueue {
     private int base = 0;
     private int[] data;
 
+    private int size;
+
     CircularQueue(int size) {
         this.data = new int[size];
+        size=0;
     }
 
     public void add(int date) {
@@ -13,6 +16,7 @@ public class CircularQueue {
         }
         top = (top + 1) % data.length;
         data[top] = date;
+        size++;
     }
 
     public int remove() {
@@ -20,7 +24,9 @@ public class CircularQueue {
             throw new IllegalStateException("Fila vazia");
         }
         int removedElement = data[base];
+        data[base] = 0;
         base = (base + 1) % data.length;
+        size--;
         return removedElement;
     }
 
@@ -30,11 +36,13 @@ public class CircularQueue {
     }
 
     public boolean isFull() {
-        return (top + 1) % data.length == base;
+//        return (top + 1) % data.length == base;
+        return (size == data.length);
     }
 
     public boolean isEmpty() {
-        return top == base - 1 || (top == data.length - 1 && base == 0);
+        //        return top == base - 1 || (top == data.length - 1 && base == 0);
+        return (size == 0);
     }
 
     private int move(int position) {
